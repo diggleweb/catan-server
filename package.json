@@ -1,0 +1,30 @@
+{
+  "name": "socket.io_boilerplte",
+  "version": "0.1.0",
+  "description": "Socket.io boilerplate app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build-client": ""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ozthekoder/socketio_boilerplate.git"
+  },
+  "keywords": [
+    "socket.io",
+    "express",
+    "setup"
+  ],
+  "author": "Osman Ozdemir",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ozthekoder/socketio_boilerplate/issues"
+  },
+  "homepage": "https://github.com/ozthekoder/socketio_boilerplate#readme",
+  "dependencies": {
+    "express": "^4.13.3",
+    "http": "0.0.0",
+    "socket.io": "^1.3.7"
+  }
+}
