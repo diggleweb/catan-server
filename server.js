@@ -1,25 +1,16 @@
 "use strict";
-var express = require('express');
-var app = express();
-var server = require('http').Server(app);
-var io = require('socket.io')(server);
+const express = require('express');
+const app = express();
+const server = require('http').Server(app);
+const io = require('socket.io')(server);
+const SessionStore = require('./Stores/SessionStore');
+var sessionStore = new SessionStore();
 
 class Server {
 	static start(port){
 		app.use(express.static('node_modules/catan-client/app'));
 		io.on('connection', function (socket) {
-
-			console.log(socket.id);
-
-			socket.emit('ping', { message: 'ping!' });
-			socket.on('ping', function (data) {
-				console.log(socket.id);
-				console.log(data);
-			});
-
-			socket.on('disconnect', function(){
-				console.log('user disconnected');
-			});
+			sessionStore.createNewSessionHandler(socket);
 		});
 		server.listen(port);
 	}

@@ -1,12 +1,16 @@
 "use strict";
-
+const Entity = require('../Objects/Entity');
 const _ = require('lodash');
-const Authentication = require('Authentication');
+const Authentication = require('./Authentication');
+const Stores = require('../Stores');
 
-class SessionHandler {
-	constructor(socket){
-		this.socket = socket;
+class SessionHandler extends Entity {
+
+	constructor(props){
+		super(props)
 	}
+
+
 }
 
 module.exports = SessionHandler;
