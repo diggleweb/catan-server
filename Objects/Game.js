@@ -1,7 +1,7 @@
 "use strict";
 const _ = require('lodash');
 const Entity = require('./Entity');
-class Game {
+class Game extends Entity {
 
 	constructor(props) {
 		super(props);

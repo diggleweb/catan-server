@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/ozthekoder/catan-server#readme",
   "dependencies": {
+    "bluebird": "^3.0.5",
     "bson-objectid": "^1.1.1",
     "catan-client": "^0.1.3",
     "express": "^4.13.3",

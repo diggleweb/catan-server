@@ -6,6 +6,7 @@ class Store {
 
 	constructor(entities) {
 		this.entities = entities || {};
+		this.count = 0;
 	}
 
 	get(id) {
@@ -18,11 +19,13 @@ class Store {
 	}
 
 	add(entity) {
-		entity.store = this;
+		this.count++;
 		return this.entities[entity._id] = entity;
+
 	}
 
 	remove(id) {
+		this.count--;
 		delete this.entities[id];
 	}
 
@@ -30,8 +33,12 @@ class Store {
 		return this.entities;
 	}
 
+	size() {
+		return this.count;
+	}
+
 	lookupBy(params) {
-		return this.entities.find(params);
+		return _.find(this.entities, params);
 	}
 }
 

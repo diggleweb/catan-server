@@ -1,7 +1,7 @@
 "use strict";
 const _ = require('lodash');
 const Entity = require('./Entity');
-class User {
+class User extends Entity {
 
 }
 
