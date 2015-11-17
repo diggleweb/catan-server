@@ -14,15 +14,11 @@ class SessionHandler  {
 		this.socket = socket;
 		this.gameStore = gameStore;
 		this.userStore = userStore;
-		this.userStore.add(new User({ userName: 'osman' }));
-		this.userStore.add(new User({ userName: 'hashim' }));
 		this.onConnect();
 	}
 
 	onConnect() {
 		this.attachListeners();
-		this.onCurrentGameCount();
-		this.onCurrentUserCount();
 	}
 
 	onRequest(request) {
@@ -48,13 +44,29 @@ class SessionHandler  {
 	onCreateUser(payload) {
 		let user = new User(payload);
 		this.userStore.add(user);
-		this.socket.emit("login", user.toJSON());
-		console.log(this.userStore.getAll());
+		let json = user.toJSON();
+		this.socket.emit("create-user", {
+			user: json,
+			token: Authentication.sign(json)
+		});
+		this.socket.broadcast.emit("current-user-count", this.userStore.size());
+	}
+
+	onLogout(payload) {
+		let user = Authentication.authenticate(payload)
+		.then((user)=>{
+			this.userStore.remove(user._id);
+			this.socket.emit("logout", { status: true });
+			this.socket.broadcast.emit("current-user-count", this.userStore.size());
+		})
+		.catch((err)=>{
+				this.socket.emit("logout", { status: false, err: err.message });
+		});
+
 	}
 
 	onCheckUserName(name) {
-		let user = this.userStore.lookupBy({ userName: name });
-		this.socket.emit("check-user-name", !!user);
+		this.socket.emit("check-user-name", !!this.userStore.lookupBy({ userName: name }));
 	}
 
 	attachListeners() {
