@@ -4,6 +4,7 @@ const ObjectID = require("bson-objectid");
 const Authentication = require('./Authentication');
 const Stores = require('../Stores');
 const User = require('../Objects/User');
+const Game = require('../Objects/Game');
 const events = require('../Data/comm.json');
 const Util = require('../Util');
 
@@ -14,6 +15,30 @@ class SessionHandler  {
 		this.socket = socket;
 		this.gameStore = gameStore;
 		this.userStore = userStore;
+
+		let game1 = new Game({ name: "game1", players: [
+			(new ObjectID()).toHexString(),
+			(new ObjectID()).toHexString(),
+			(new ObjectID()).toHexString()]
+		});
+
+		let game2 = new Game({ name: "game2", players: [
+			(new ObjectID()).toHexString(),
+			(new ObjectID()).toHexString(),
+			(new ObjectID()).toHexString()]
+		});
+
+		let game3 = new Game({ name: "game3", players: [
+			(new ObjectID()).toHexString(),
+			(new ObjectID()).toHexString(),
+			(new ObjectID()).toHexString()]
+		});
+
+		this.gameStore.add(game1);
+		this.gameStore.add(game2);
+		this.gameStore.add(game3);
+
+
 		this.onConnect();
 	}
 
@@ -33,12 +58,12 @@ class SessionHandler  {
 		this.socket.emit("current-user-count", this.userStore.size());
 	}
 
-	onCurrentGameNames() {
-		this.socket.emit("current-game-count", this.gameStore.getAll());
+	onCurrentGamesInfo() {
+		this.socket.emit("current-games-info", this.gameStore.getAll());
 	}
 
 	onCurrentUserNames() {
-		this.socket.emit("current-user-count", this.userStore.getAll());
+		this.socket.emit("current-user-count", _.map(this.userStore.getAll(), (game)=> game.toJSON()));
 	}
 
 	onCreateUser(payload) {

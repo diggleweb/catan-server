@@ -25,8 +25,11 @@ class Store {
 	}
 
 	remove(id) {
-		this.count--;
-		delete this.entities[id];
+		if(this.entities[id]) {
+			this.count--;
+			delete this.entities[id];
+		}
+
 	}
 
 	getAll() {
