@@ -1,6 +1,6 @@
 {
   "name": "catan-server",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Socket.io boilerplate app",
   "main": "index.js",
   "scripts": {
